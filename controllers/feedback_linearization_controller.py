@@ -23,10 +23,10 @@ class FeedbackLinearizationController(Controller):
         # kd = np.array([[1, 0], [0, 1]])
         # kp = np.array([[1, 0], [0, 1]])
 
-        Kd = np.array([0.1, 0.1])
-        Kp = np.array([0.1, 0.1])
+        Kd = np.array([[3.0, 0], [0, 3.0]])
+        Kp = np.array([[8.0, 0], [0, 8.0]])
 
-        v = q_r_ddot + Kd @ (q_dot - q_r_dot) + Kp @ (q - q_r)
+        v = q_r_ddot + Kd @ (q_r_dot - q_dot) + Kp @ (q_r - q)
         t = self.model.M(x) @ v + self.model.C(x) @ q_dot
         
         return t
