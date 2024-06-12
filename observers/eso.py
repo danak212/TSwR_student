@@ -17,7 +17,13 @@ class ESO:
 
     def update(self, q, u):
         self.states.append(copy(self.state))
-        ### TODO implement ESO update
+        z_hd = (
+                self.A @ np.reshape(self.state, (len(self.state), 1))
+                + self.B @ np.atleast_2d(u)
+                + (self.L @ (q - self.W @ np.reshape(self.state, (len(self.state), 1))))
+        )
+
+        self.state = (self.state + self.Tp * np.reshape(z_hd, (1, len(z_hd))))[0]
 
     def get_state(self):
         return self.state
