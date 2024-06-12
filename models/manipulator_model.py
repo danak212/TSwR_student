@@ -13,11 +13,11 @@ class ManiuplatorModel:
         self.I_1 = 1 / 12 * self.m1 * (3 * self.r1**2 + self.l1**2)
         self.I_2 = 1 / 12 * self.m2 * (3 * self.r2**2 + self.l2**2)
         self.m3 = 0.0
-        self.r3 = 0.01
+        self.r3 = 0.0
         self.I_3 = 0
         self.d1 = self.l1 / 2
         self.d2 = self.l2 / 2
-        # self.I_3 = 2.0 / 5 * self.m3 * self.r3**2
+        self.I_3 = 2.0 / 5 * self.m3 * self.r3**2
 
         self.alpha = (
                 self.m1 * self.d1 ** 2
