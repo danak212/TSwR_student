@@ -27,19 +27,22 @@ class ManiuplatorModel:
         )
         self.beta = self.m2 * self.l1 * self.d2
         self.gamma = self.m2 * self.d2 ** 2 + self.I_2
+
     def M(self, x):
         """
         Please implement the calculation of the mass matrix, according to the model derived in the exercise
         (2DoF planar manipulator with the object at the tip)
         """
         q1, q2, q1_dot, q2_dot = x
-        matrix = [
+        matrix = np.array(
             [
-                self.alpha + 2 * self.beta * np.cos(q2),
-                self.gamma + self.beta * np.cos(q2),
-            ],
-            [self.gamma + self.beta * np.cos(q2), self.gamma],
-        ]
+                [
+                    self.alpha + 2 * self.beta * np.cos(q2),
+                    self.gamma + self.beta * np.cos(q2),
+                ],
+                [self.gamma + self.beta * np.cos(q2), self.gamma],
+            ]
+        )
         return matrix
     
     def C(self, x):
@@ -48,4 +51,15 @@ class ManiuplatorModel:
         in the exercise (2DoF planar manipulator with the object at the tip)
         """
         q1, q2, q1_dot, q2_dot = x
-        return NotImplementedError()
+
+        matrix = np.array(
+            [
+                [
+                    -self.beta * np.sin(q2) * q2_dot,
+                    -self.beta * np.sin(q2) * (q1_dot + q2_dot),
+                ],
+                [self.beta * np.sin(q2) * q1_dot, 0],
+            ]
+        )
+
+        return matrix
