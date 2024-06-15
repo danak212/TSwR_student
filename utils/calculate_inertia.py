@@ -1,5 +1,6 @@
 import xml.etree.ElementTree as ET
 import sys
+import os
 
 if __name__ == "__main__":
     # fname = sys.argv[0]

@@ -8,28 +8,27 @@ class MMAController(Controller):
         self.model1 = ManiuplatorModel(Tp, 0.1, 0.05)
         self.model2 = ManiuplatorModel(Tp, 0.01, 0.01)
         self.model3 = ManiuplatorModel(Tp, 1.0, 0.3)
+
         self.models = [self.model1, self.model2, self.model3]
         self.i = 0
-
         self.u = np.array([[0], [0]])
         self.Kp = np.array([[15, 0], [0, 15]])
-        self.Kd = np.array([[20, 0], [0, 40]])
+        self.Kd = np.array([[20, 0], [0, 55]])
 
     def choose_model(self, x):
-        lastError = np.inf
+        prevError = np.inf
         for index, model in enumerate(self.models):
             y = model.M(x) @ self.u + model.C(x) @ x[2:]
             error = np.sum(abs(x[:2] - y[:2]))
-            if error < lastError:
-                lastError = error
+            if error < prevError:
+                prevError = error
                 self.i = index
-        # print("**************", self.i)
 
     def calculate_control(self, x, q_r, q_r_dot, q_r_ddot):
         self.choose_model(x)
         q = x[:2]
         q_dot = x[2:]
-        v = q_r_ddot + self.Kd @ (q_r - q_dot) - self.Kp @ (q - q_r)
+        v = q_r_ddot + self.Kd @ (q_r_dot - q_dot) + self.Kp @ (q_r - q)
         M = self.models[self.i].M(x)
         C = self.models[self.i].C(x)
         u = M @ v[:, np.newaxis] + C @ q_dot[:, np.newaxis]
