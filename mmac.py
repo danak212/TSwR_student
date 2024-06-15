@@ -14,7 +14,11 @@ from utils.simulation import simulate
 """http://www.gipsa-lab.fr/~ioandore.landau/adaptivecontrol/Transparents/Courses/AdaptiveCourse5GRK.pdf"""
 
 Tp = 0.01
+<<<<<<< HEAD
 end = 5.
+=======
+end = 25.
+>>>>>>> parent of c212aa4 (Last finally changes)
 
 
 # TODO: Switch to MMAC as soon as you implement it
